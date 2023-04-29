@@ -58,20 +58,28 @@ class ProfileScreen extends StatelessWidget {
                         child: CircleAvatar(
                           radius: 85.0,
                           backgroundColor: Colors.black12,
-                          child: image != null
-                              ? Image.file(
-                                  File(image.path),
-                                  width: 100,
-                                  height: 100,
-                                  fit: BoxFit.cover,
-                                )
-                              : SizedBox(
-                                  width: 100,
-                                  height: 100,
-                                  child: Image(
-                                      image: NetworkImage(
-                                          '${ChatCubit.get(context).userModel!.image}')),
-                                ),
+                          child: Container(
+                            width: 160,
+                            height: 160,
+                            clipBehavior: Clip.antiAliasWithSaveLayer,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(100.0),
+                            ),
+                            child: image != null
+                                ? Image.file(
+                                    File(image.path),
+                                    width: 100,
+                                    height: 100,
+                                    fit: BoxFit.cover,
+                                  )
+                                : SizedBox(
+                                    width: 100,
+                                    height: 100,
+                                    child: Image(
+                                        image: NetworkImage(
+                                            '${ChatCubit.get(context).userModel!.image}'),fit: BoxFit.cover,),
+                                  ),
+                          ),
                         ),
                       ),
                     ),

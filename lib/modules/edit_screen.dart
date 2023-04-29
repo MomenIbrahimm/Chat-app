@@ -55,24 +55,35 @@ class EditScreen extends StatelessWidget {
                               },
                               child: CircleAvatar(
                                 radius: 85.0,
-                                backgroundColor: Colors.black,
+                                backgroundColor:
+                                ChatCubit.get(context).isSwitch == false
+                                    ? Colors.black
+                                    : Colors.white,
                                 child: CircleAvatar(
                                   radius: 85.0,
-                                  backgroundColor: ChatCubit.get(context).isSwitch==false?Colors.black:Colors.white,
-                                  child: image != null
-                                      ? Image.file(
-                                          File(image.path),
-                                          width: 100,
-                                          height: 100,
-                                          fit: BoxFit.cover,
-                                        )
-                                      : SizedBox(
-                                          width: 100,
-                                          height: 100,
-                                          child: Image(
-                                              image: NetworkImage(
-                                                  '${ChatCubit.get(context).userModel!.image}')),
-                                        ),
+                                  backgroundColor: Colors.black12,
+                                  child: Container(
+                                    width: 160,
+                                    height: 160,
+                                    clipBehavior: Clip.antiAliasWithSaveLayer,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(100.0),
+                                    ),
+                                    child: image != null
+                                        ? Image.file(
+                                      File(image.path),
+                                      width: 100,
+                                      height: 100,
+                                      fit: BoxFit.cover,
+                                    )
+                                        : SizedBox(
+                                      width: 100,
+                                      height: 100,
+                                      child: Image(
+                                        image: NetworkImage(
+                                            '${ChatCubit.get(context).userModel!.image}'),fit: BoxFit.cover,),
+                                    ),
+                                  ),
                                 ),
                               ),
                             ),
