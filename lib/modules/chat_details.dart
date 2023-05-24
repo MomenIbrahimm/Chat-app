@@ -6,7 +6,6 @@ import 'package:chat_app/share/chat_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-
 import '../share/components.dart';
 
 class ChatDetails extends StatelessWidget {
@@ -102,8 +101,11 @@ class ChatDetails extends StatelessWidget {
                                               borderRadius:
                                               BorderRadius.circular(25.0)),
                                           hintText: 'Message',
-                                          suffixIcon: const Icon(
-                                            Icons.camera_alt,
+                                          suffixIcon: IconButton(
+                                            onPressed: (){
+                                              ChatCubit.get(context).getChatImage();
+                                            },
+                                            icon: const Icon(Icons.camera_alt),
                                             color: Colors.grey,
                                           ),
                                           filled: true,

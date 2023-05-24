@@ -14,51 +14,15 @@
       },
       "oauth_client": [
         {
-          "client_id": "375718918494-as2ejo5oeks19uies96jpqe14mh9316o.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyBqV2x_Fl5CtSBuURCeSIN-7MU8TAIvoy8"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "375718918494-as2ejo5oeks19uies96jpqe14mh9316o.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "375718918494-j9p5cjh85gd3bmtgt10i824vbnpcoi50.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.example.chatApp"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:375718918494:android:33ec8d029c87afe3d837cf",
-        "android_client_info": {
-          "package_name": "com.momen.my_chat"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "375718918494-6kta2jncabncfdr7gtrq6i6phvi5qfmn.apps.googleusercontent.com",
+          "client_id": "375718918494-kigbu6ulv053oriei7afghq5fn97ms6h.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.momen.my_chat",
-            "certificate_hash": "5c205d8b749149848f04294db1713d3768b20576"
+            "package_name": "com.example.chat_app",
+            "certificate_hash": "7e9a73cb3b856be63f21274ff363fc2c6ada0a03"
           }
         },
         {
-          "client_id": "375718918494-as2ejo5oeks19uies96jpqe14mh9316o.apps.googleusercontent.com",
+          "client_id": "375718918494-q68h1tt1dqhh6ev1ks7l27prltuo42mm.apps.googleusercontent.com",
           "client_type": 3
         }
       ],

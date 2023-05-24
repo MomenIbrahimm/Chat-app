@@ -57,6 +57,21 @@ class ChatCubit extends Cubit<ChatState> {
     }
   }
 
+  XFile? chatImage;
+  ImagePicker pickedChatFile = ImagePicker();
+
+  Future getChatImage() async {
+    chatImage = await pickedChatFile.pickImage(source: ImageSource.gallery);
+    if (chatImage != null) {
+      chatImage = XFile(chatImage!.path);
+      print(chatImage!.path);
+      emit(PickedImageSuccessState());
+    } else {
+      print('no image select');
+      emit(PickedImageErrorState());
+    }
+  }
+
 // /data/user/0/com.example.chat_app/cache/f3d994c4-d042-433f-b0bc-a39504204fb5/FB_IMG_1679519864824.jpg
 
   uploadImage({

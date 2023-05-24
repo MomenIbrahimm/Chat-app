@@ -1,9 +1,12 @@
 import 'package:chat_app/login_screen/login_cubit.dart';
 import 'package:chat_app/login_screen/login_state.dart';
+import 'package:chat_app/modules/animate.dart';
 import 'package:chat_app/share/cache_helper.dart';
 import 'package:chat_app/share/chat_cubit.dart';
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lottie/lottie.dart';
 import '../modules/chat_screen.dart';
 import '../register/register_screen.dart';
 import '../share/components.dart';
@@ -28,18 +31,31 @@ class LoginScreen extends StatelessWidget {
               uId = state.uId;
               ChatCubit.get(context).getUserData();
               ChatCubit.get(context).getAllUsers();
-              successSnackBar(context: context,text: 'Login Successfully');
+              successSnackBar(context: context, text: 'Login Successfully');
+            });
+          } else if (state is ChatLoginWithGoogleSuccessState) {
+            CacheHelper.saveData(key: 'uId', value: state.uId).then((value) {
+              Navigator.of(context).pushAndRemoveUntil(SlideAnimate(page: const ChatScreen()), (route) => false);
+              uId = state.uId;
+              ChatCubit.get(context).getUserData();
+              ChatCubit.get(context).getAllUsers();
+              successSnackBar(context: context, text: 'Login Successfully');
             });
           } else if (state is ChatLoginErrorState) {
             if (state.error.toString() ==
                 '[firebase_auth/invalid-email] The email address is badly formatted.') {
-              errorSnackBar(context: context,text: 'The email address is badly formatted');
+              errorSnackBar(
+                  context: context,
+                  text: 'The email address is badly formatted');
             } else if (state.error.toString() ==
                 '[firebase_auth/user-not-found] There is no user record corresponding to this identifier. The user may have been deleted.') {
-              errorSnackBar(context: context,text: 'here is no user record corresponding to this identifier');
+              errorSnackBar(
+                  context: context,
+                  text:
+                      'here is no user record corresponding to this identifier');
             } else if (state.error.toString() ==
                 '[firebase_auth/wrong-password] The password is invalid or the user does not have a password.') {
-              errorSnackBar(context: context,text: 'The password is invalid');
+              errorSnackBar(context: context, text: 'The password is invalid');
             }
           }
         },
@@ -67,15 +83,13 @@ class LoginScreen extends StatelessWidget {
                             height: 50.0,
                           ),
                           defaultText(
-                              text: 'User Login', size: 30, color: Colors.white),
+                              text: 'User Login',
+                              size: 30,
+                              color: Colors.white),
                           const SizedBox(
                             height: 10,
                           ),
-                          const Icon(
-                            Icons.login,
-                            size: 50.0,
-                            color: Colors.white,
-                          ),
+                          LottieBuilder.asset('assets/login.json',height: 100.0,width: 100,),
                           const SizedBox(
                             height: 70.0,
                           ),
@@ -110,10 +124,11 @@ class LoginScreen extends StatelessWidget {
                                     validateText: 'password field is empty',
                                     suffixIcon: IconButton(
                                         onPressed: () {
-                                          ChatLoginCubit.get(context).isChange();
+                                          ChatLoginCubit.get(context)
+                                              .isChange();
                                         },
-                                        icon: Icon(
-                                            ChatLoginCubit.get(context).suffix)),
+                                        icon: Icon(ChatLoginCubit.get(context)
+                                            .suffix)),
                                     onSubmitted: () {},
                                   ),
                                   const SizedBox(
@@ -130,6 +145,36 @@ class LoginScreen extends StatelessWidget {
                                       },
                                       text: 'login',
                                       isUpperCase: true),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Container(
+                                      width: double.infinity,
+                                      decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(20.0),
+                                      ),
+                                      child: MaterialButton(
+                                        onPressed: () {
+                                       ChatLoginCubit.get(context)
+                                              .signInWithGoogle();
+                                        },
+                                        child: state is ChatLoginWithGoogleLoadingState? const Center(child: CircularProgressIndicator(strokeWidth: 1.7,)):Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            LottieBuilder.asset(
+                                              'assets/google.json',
+                                              height: 60.0,
+                                              width: 60.0,
+                                              fit: BoxFit.cover,
+                                            ),
+                                            defaultText(
+                                                text: 'Sign in with Google'),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
@@ -138,8 +183,8 @@ class LoginScreen extends StatelessWidget {
                                           size: 14.0),
                                       defaultTextButton(
                                           onPressed: () {
-                                            navigateAndReplace(
-                                                context, const RegisterScreen());
+                                            navigateAndReplace(context,
+                                                const RegisterScreen());
                                           },
                                           text: 'Register',
                                           fontWeight: FontWeight.bold,

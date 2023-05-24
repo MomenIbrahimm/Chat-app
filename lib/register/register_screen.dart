@@ -39,6 +39,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 requestFocus(context);
               },
               child: Container(
+                height:double.infinity,
                 decoration: const BoxDecoration(
                     image: DecorationImage(image: AssetImage('assets/logImage.jpg'),fit: BoxFit.cover)
                 ),

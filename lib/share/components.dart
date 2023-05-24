@@ -12,26 +12,23 @@ Widget defaultMaterialButton({
   bool isUpperCase = false,
 }) {
   return Center(
-    child: Padding(
-      padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 30.0),
-      child: Container(
-        width: width,
-        height: high,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20.0),
-          gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: <Color>[color1, color2]),
-        ),
-        child: MaterialButton(
-          onPressed: () {
-            onPressed();
-          },
-          child: Text(
-            isUpperCase ? text.toUpperCase() : text,
-            style: TextStyle(color: textColor, fontSize: 16.0),
-          ),
+    child: Container(
+      width: width,
+      height: high,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20.0),
+        gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: <Color>[color1, color2]),
+      ),
+      child: MaterialButton(
+        onPressed: () {
+          onPressed();
+        },
+        child: Text(
+          isUpperCase ? text.toUpperCase() : text,
+          style: TextStyle(color: textColor, fontSize: 16.0),
         ),
       ),
     ),

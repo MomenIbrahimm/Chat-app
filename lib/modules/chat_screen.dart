@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../model/user_model.dart';
+import 'animate.dart';
 
 class ChatScreen extends StatelessWidget {
   const ChatScreen({Key? key}) : super(key: key);
@@ -30,7 +31,7 @@ class ChatScreen extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 15.0),
                   child: GestureDetector(
                     onTap: (){
-                      navigateTo(context, const ProfileScreen());
+                      Navigator.of(context).push(SlideAnimate(page: const ProfileScreen()));
                     },
                     child:  CircleAvatar(
                       backgroundImage: NetworkImage(

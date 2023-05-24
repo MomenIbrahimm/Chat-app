@@ -1,5 +1,5 @@
 import 'dart:io';
-
+import 'package:chat_app/modules/animate.dart';
 import 'package:chat_app/modules/photo_view.dart';
 import 'package:chat_app/share/chat_cubit.dart';
 import 'package:chat_app/share/chat_state.dart';
@@ -18,19 +18,29 @@ class ProfileScreen extends StatelessWidget {
     return BlocConsumer<ChatCubit, ChatState>(
       listener: (context, state) {},
       builder: (context, state) {
-        var model = ChatCubit.get(context).userModel;
-        var image = ChatCubit.get(context).image;
+        var model = ChatCubit
+            .get(context)
+            .userModel;
+        var image = ChatCubit
+            .get(context)
+            .image;
         return Scaffold(
-          backgroundColor: ChatCubit.get(context).isSwitch == false
+          backgroundColor: ChatCubit
+              .get(context)
+              .isSwitch == false
               ? Colors.white
               : Colors.black,
           appBar: AppBar(
-            backgroundColor: ChatCubit.get(context).isSwitch == false
+            backgroundColor: ChatCubit
+                .get(context)
+                .isSwitch == false
                 ? Colors.white
                 : Colors.black,
             elevation: 0.0,
             iconTheme: IconThemeData(
-                color: ChatCubit.get(context).isSwitch == false
+                color: ChatCubit
+                    .get(context)
+                    .isSwitch == false
                     ? Colors.black
                     : Colors.white),
           ),
@@ -46,15 +56,17 @@ class ProfileScreen extends StatelessWidget {
                   Center(
                     child: InkWell(
                       onTap: () {
-                        navigateTo(
-                            context, PhotoViewPage(imageUrl: model!.image!));
+                        Navigator.of(context).push(SlideAnimate(
+                            page: PhotoViewPage(imageUrl: '${ model!.image}')));
                       },
                       child: CircleAvatar(
                         radius: 85.0,
                         backgroundColor:
-                            ChatCubit.get(context).isSwitch == false
-                                ? Colors.black
-                                : Colors.white,
+                        ChatCubit
+                            .get(context)
+                            .isSwitch == false
+                            ? Colors.black
+                            : Colors.white,
                         child: CircleAvatar(
                           radius: 85.0,
                           backgroundColor: Colors.black12,
@@ -67,18 +79,21 @@ class ProfileScreen extends StatelessWidget {
                             ),
                             child: image != null
                                 ? Image.file(
-                                    File(image.path),
-                                    width: 100,
-                                    height: 100,
-                                    fit: BoxFit.cover,
-                                  )
+                              File(image.path),
+                              width: 100,
+                              height: 100,
+                              fit: BoxFit.cover,
+                            )
                                 : SizedBox(
-                                    width: 100,
-                                    height: 100,
-                                    child: Image(
-                                        image: NetworkImage(
-                                            '${ChatCubit.get(context).userModel!.image}'),fit: BoxFit.cover,),
-                                  ),
+                              width: 100,
+                              height: 100,
+                              child: Image(
+                                image: NetworkImage(
+                                    '${ChatCubit
+                                        .get(context)
+                                        .userModel!
+                                        .image}'), fit: BoxFit.cover,),
+                            ),
                           ),
                         ),
                       ),
@@ -89,48 +104,53 @@ class ProfileScreen extends StatelessWidget {
                   ),
                   Center(
                       child: Text(
-                    '${model!.name}',
-                    style: TextStyle(
-                        fontSize: 20.0,
-                        fontWeight: FontWeight.bold,
-                        color: ChatCubit.get(context).isSwitch == false
-                            ? Colors.black
-                            : Colors.white),
-                  )),
+                        '${model!.name}',
+                        style: TextStyle(
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.bold,
+                            color: ChatCubit
+                                .get(context)
+                                .isSwitch == false
+                                ? Colors.black
+                                : Colors.white),
+                      )),
                   const SizedBox(
                     height: 5.0,
                   ),
                   Center(
                       child: Text(
-                    '${model.bio}',
-                    style: const TextStyle(
-                        fontSize: 14.0,
-                        color: Colors.grey,
-                        fontWeight: FontWeight.bold),
-                  )),
+                        '${model.bio}',
+                        style: const TextStyle(
+                            fontSize: 14.0,
+                            color: Colors.grey,
+                            fontWeight: FontWeight.bold),
+                      )),
                   const SizedBox(
                     height: 50.0,
                   ),
                   Row(
                     children: [
                       Switch(
-                          value: ChatCubit.get(context).isSwitch,
+                          value: ChatCubit
+                              .get(context)
+                              .isSwitch,
                           onChanged: (value) {
                             CacheHelper.saveData(key: 'isDark', value: value)
                                 .then((value) {
                               ChatCubit.get(context).switchChange();
                             })
                                 .catchError((error) {
-                                  print('An Error');
+                              print('An Error');
                             });
-
                           }),
                       const SizedBox(
                         width: 10.0,
                       ),
                       defaultText(
                           text: 'Dark mode',
-                          color: ChatCubit.get(context).isSwitch == false
+                          color: ChatCubit
+                              .get(context)
+                              .isSwitch == false
                               ? Colors.black
                               : Colors.white),
                     ],
@@ -143,7 +163,9 @@ class ProfileScreen extends StatelessWidget {
                     child: InkWell(
                       onTap: () {
                         CacheHelper.removeData(key: 'uId').then((value) {
-                          navigateTo(context, LoginScreen());
+                          Navigator.of(context).pushAndRemoveUntil(
+                              SlideAnimate(page: LoginScreen()), (
+                              route) => false);
                         });
                       },
                       child: Row(
@@ -159,7 +181,9 @@ class ProfileScreen extends StatelessWidget {
                           Text(
                             'Logout',
                             style: TextStyle(
-                                color: ChatCubit.get(context).isSwitch == false
+                                color: ChatCubit
+                                    .get(context)
+                                    .isSwitch == false
                                     ? Colors.black
                                     : Colors.white,
                                 fontSize: 18.0),
@@ -175,11 +199,12 @@ class ProfileScreen extends StatelessWidget {
                     width: double.infinity,
                     child: OutlinedButton(
                         onPressed: () {
-                          navigateTo(context, EditScreen());
+                          Navigator.of(context).push(SlideAnimate(
+                              page: EditScreen()));
                         },
                         style: const ButtonStyle(
                           backgroundColor:
-                              MaterialStatePropertyAll<Color>(Colors.white),
+                          MaterialStatePropertyAll<Color>(Colors.white),
                         ),
                         child: const Text('Edit Profile')),
                   )
