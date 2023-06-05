@@ -3,7 +3,6 @@ import 'package:chat_app/login_screen/login_state.dart';
 import 'package:chat_app/modules/animate.dart';
 import 'package:chat_app/share/cache_helper.dart';
 import 'package:chat_app/share/chat_cubit.dart';
-import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
@@ -134,6 +133,7 @@ class LoginScreen extends StatelessWidget {
                                   const SizedBox(
                                     height: 30.0,
                                   ),
+                                  state is ChatLoginLoadingState ? const Center(child: CircularProgressIndicator(strokeWidth: 1.5,)) :
                                   defaultMaterialButton(
                                       onPressed: () {
                                         if (formKey.currentState!.validate()) {

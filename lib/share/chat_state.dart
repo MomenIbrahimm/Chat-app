@@ -33,6 +33,10 @@ class GetMessageErrorChatState extends ChatState{}
 
 class ChangeSwitch extends ChatState{}
 
+class NotifyState extends ChatState{}
+
+class ChangeIconChatState extends ChatState{}
+
 
 
 

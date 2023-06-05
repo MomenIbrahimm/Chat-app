@@ -103,7 +103,7 @@ class EditScreen extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(20.0)),
                               child: IconButton(
                                   onPressed: () {
-
+                                    ChatCubit.get(context).getProfileImage();
                                   },
                                   icon: const Icon(
                                     Icons.camera_alt,

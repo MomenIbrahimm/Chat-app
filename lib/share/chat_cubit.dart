@@ -4,7 +4,9 @@ import 'package:chat_app/share/chat_state.dart';
 import 'package:chat_app/model/user_model.dart';
 import 'package:chat_app/share/constant.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -26,6 +28,17 @@ class ChatCubit extends Cubit<ChatState> {
 
     emit(ChangeSwitch());
     print(isSwitch);
+  }
+
+  Icon icon =  const Icon(EvaIcons.heart);
+  changeIconsChat(){
+    if(typController.text != '')
+      {
+        icon = const Icon(Icons.send);
+      }else{
+      icon = const Icon(EvaIcons.heart);
+    }
+    emit(ChangeIconChatState());
   }
 
   UserModel? userModel;
@@ -57,20 +70,20 @@ class ChatCubit extends Cubit<ChatState> {
     }
   }
 
-  XFile? chatImage;
-  ImagePicker pickedChatFile = ImagePicker();
-
-  Future getChatImage() async {
-    chatImage = await pickedChatFile.pickImage(source: ImageSource.gallery);
-    if (chatImage != null) {
-      chatImage = XFile(chatImage!.path);
-      print(chatImage!.path);
-      emit(PickedImageSuccessState());
-    } else {
-      print('no image select');
-      emit(PickedImageErrorState());
-    }
-  }
+  // XFile? chatImage;
+  // ImagePicker pickedChatFile = ImagePicker();
+  //
+  // Future getChatImage() async {
+  //   chatImage = await pickedChatFile.pickImage(source: ImageSource.gallery);
+  //   if (chatImage != null) {
+  //     chatImage = XFile(chatImage!.path);
+  //     print(chatImage!.path);
+  //     emit(PickedImageSuccessState());
+  //   } else {
+  //     print('no image select');
+  //     emit(PickedImageErrorState());
+  //   }
+  // }
 
 // /data/user/0/com.example.chat_app/cache/f3d994c4-d042-433f-b0bc-a39504204fb5/FB_IMG_1679519864824.jpg
 
@@ -135,28 +148,33 @@ class ChatCubit extends Cubit<ChatState> {
 
     users = [];
     FirebaseFirestore.instance.collection('users').get().then((value) {
-      value.docs.forEach((element) {
+      for (var element in value.docs) {
         if (element.data()['uId'] != userModel!.uId) {
           users!.add(UserModel.fromJson(element.data()));
         }
-      });
-      emit(GetAllUserSuccessChatState(userModel!));
+        emit(GetAllUserSuccessChatState(userModel!));
+      }
     }).catchError((error) {
       emit(GetAllUserErrorChatState());
       print(error.toString());
     });
   }
 
+
+
   void sendMessage({
     String? receiveId,
     String? dateTime,
     String? text,
+    String? image,
   }) {
     MessageModel model = MessageModel(
         senderId: userModel!.uId,
         dateTime: dateTime,
         text: text,
-        receiveId: receiveId);
+        receiveId: receiveId,
+      image: image
+    );
     FirebaseFirestore.instance
         .collection('users')
         .doc(userModel!.uId)
@@ -202,7 +220,10 @@ class ChatCubit extends Cubit<ChatState> {
       event.docs.forEach((element) {
         return messages.add(MessageModel.fromJson(element.data()));
       });
+
       emit(GetMessageSuccessChatState());
     });
   }
+
+
 }

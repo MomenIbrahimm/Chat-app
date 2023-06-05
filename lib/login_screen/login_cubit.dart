@@ -27,6 +27,8 @@ class ChatLoginCubit extends Cubit<ChatLoginState> {
     required String email,
     required String password,
   }) {
+    emit(ChatLoginLoadingState());
+
     FirebaseAuth.instance
         .signInWithEmailAndPassword(email: email, password: password)
         .then((value) {
